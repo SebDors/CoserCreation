@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: coser_creation_db
+    env_file:
+      - ./.env
+    volumes:
+      # Persist database data
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      # Expose db port for local development/debugging if needed
+      - "5432:5432"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    ports:
+      # Map host port 80 to the container's port 8080 (where Nginx is listening)
+      - "80:8080"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+    driver: local
