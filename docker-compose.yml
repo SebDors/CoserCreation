@@ -5,8 +5,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      # Persist database data
-      - postgres_data:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d
     ports:
       # Expose db port for local development/debugging if needed
       - "5432:5432"
