@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class CoserCreationApplication {
+public class CoserCreation {
 
 	@RequestMapping("/")
 	public String home() {
@@ -15,7 +15,7 @@ public class CoserCreationApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(CoserCreationApplication.class, args);
+		SpringApplication.run(CoserCreation.class, args);
 	}
 
 }
