@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import CoserCreation.DAO.creationDAO;
-import CoserCreation.models.creationModel;
+import CoserCreation.DTO.creationDTO;
+import CoserCreation.DTO.creationMapper;
 
 @Service
 public class creationService {
@@ -15,8 +16,8 @@ public class creationService {
         this.creationDAO = creationDAO;
     }
 
-    public List<creationModel> getAllCreations() {
-        return creationDAO.findAll();
+    public List<creationDTO> getAllCreations() {
+        return creationMapper.toDTO(creationDAO.findAll());
     }
 
 }
