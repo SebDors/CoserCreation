@@ -1,0 +1,25 @@
+<h2>Catalogue Actuel</h2>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Nom</th>
+        <th>Prix</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products$ | async">
+        <td><img [src]="product.imageUrl" [alt]="product.name" width="50"></td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price | currency:'EUR' }}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="onDelete(product.id)">
+            <i class="fas fa-trash"></i> Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

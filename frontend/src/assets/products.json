@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "Pochette à mug",
+    "price": 15,
+    "imageUrl": "assets/images/premiertest.jpg",
+    "description": "Une belle pochette pour transporter votre mug."
+  },
+  {
+    "id": 2,
+    "name": "Sac banane",
+    "price": 25,
+    "imageUrl": "assets/images/deuxiemetest.jpg",
+    "description": "Un sac banane stylé et pratique."
+  },
+  {
+    "id": 3,
+    "name": "Pochette lavable",
+    "price": 12,
+    "imageUrl": "assets/images/troisiemetest.jpg",
+    "description": "Pochette lavable à savon ou shampoing."
+  },
+  {
+    "id": 4,
+    "name": "Sac en lin",
+    "price": 30,
+    "imageUrl": "assets/images/lin.jpg",
+    "description": "Sac en lin et similicuir."
+  },
+  {
+    "id": 5,
+    "name": "Bandeau démaquillant",
+    "price": 8,
+    "imageUrl": "assets/images/quatriemetest.jpg",
+    "description": "Bandeau pour se démaquiller en douceur."
+  },
+  {
+    "id": 6,
+    "name": "Serviette pour cheveux",
+    "price": 18,
+    "imageUrl": "assets/images/cinquiemetest.jpg",
+    "description": "Serviette ultra-absorbante pour les cheveux."
+  },
+  {
+    "id": 7,
+    "name": "Lingettes démaquillantes",
+    "price": 10,
+    "imageUrl": "assets/images/sixiemetest.jpg",
+    "description": "Lot de lingettes démaquillantes réutilisables."
+  },
+  {
+    "id": 8,
+    "name": "Tote bag",
+    "price": 20,
+    "imageUrl": "assets/images/dry.jpg",
+    "description": "Un tote bag unique pour vos sorties."
+  }
+]
