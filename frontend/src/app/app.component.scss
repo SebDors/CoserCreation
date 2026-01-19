@@ -8,3 +8,12 @@
   font-size: 2rem;
   font-weight: bold;
 }
+
+.navbar-nav .nav-link {
+  color: #343a40; // Dark grey for better contrast on background image
+  font-weight: 500; // Slightly bolder
+}
+
+.navbar-nav .nav-link:hover {
+  color: darken(#343a40, 10%); // Slightly darker on hover
+}

@@ -1,11 +1,13 @@
 <section class="container my-5">
-  <h2 class="text-center mb-4">Notre Collection</h2>
+  <h2 class="text-center mb-4" id="collection-grid">Notre Collection</h2>
   <div class="product-grid" *ngIf="products$ | async as products">
     <div *ngFor="let product of products" class="product-card">
       <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
-      <div class="product-overlay">
+      <div class="product-info">
         <h3 class="product-name">{{ product.name }}</h3>
         <p class="product-price">{{ product.price | currency:'EUR' }}</p>
+      </div>
+      <div class="product-overlay">
         <a [routerLink]="['/product', product.id]" class="buy-button">Voir détails</a>
       </div>
     </div>

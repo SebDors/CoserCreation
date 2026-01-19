@@ -1,12 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
-@import "app/admin/admin.styles.scss";
-
 // 1. Include functions first (if needed)
 @import "bootstrap/scss/functions";
 
 // 2. Override variable defaults
-$primary: #D4AF37; // Soft Gold
+$primary: #EBCF98; // Softer Gold
 $body-bg: #FDFBF7; // Off-white
+
+// Custom admin styles are imported after variables to use them
+@import "app/admin/admin.styles.scss";
+
+html, body {
+  height: 100%;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 body {
   position: relative;
@@ -49,3 +59,8 @@ app-contact-form {
 
 // 3. Include remaining bootstrap styles
 @import "bootstrap/scss/bootstrap.scss";
+
+.navbar-nav .nav-link.active {
+  color: $primary;
+  font-weight: bold;
+}
