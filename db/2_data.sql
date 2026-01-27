@@ -191,6 +191,10 @@ VALUES (
         'media/colors/Ecru.webp'
     ),
     (
+        'Framboise',
+        'media/colors/Framboise.jpg'
+    ),
+    (
         'Fuchsia Pink',
         'media/colors/FuchsiaPink.jpg'
     ),
