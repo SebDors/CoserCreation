@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import CoserCreation.DAO.ItemDAO;
 import CoserCreation.DTO.ItemDTO;
 import CoserCreation.DTO.ItemMapper;
+import CoserCreation.DTO.ItemShortDTO;
 
 @Service
 public class ItemService {
@@ -16,8 +17,12 @@ public class ItemService {
         this.itemDAO = itemDAO;
     }
 
-    public List<ItemDTO> getAllItems() {
-        return ItemMapper.toDTOList(itemDAO.findAll());
+    public List<ItemShortDTO> getAllItems() {
+        return ItemMapper.toShortDTOList(itemDAO.findAll());
+    }
+
+    public ItemDTO getItemById(int id) {
+        return ItemMapper.toDTO(itemDAO.findById(id).get());
     }
 
 }

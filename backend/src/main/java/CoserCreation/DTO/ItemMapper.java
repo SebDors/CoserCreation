@@ -64,6 +64,28 @@ public class ItemMapper {
                 .build();
     }
 
+    public static ItemShortDTO toShortDTO(ItemModel model) {
+        if (model == null) {
+            return null;
+        }
+        return ItemShortDTO.builder()
+                .id(model.getId())
+                .title(model.getTitle())
+                .price(model.getPrice())
+                .description(model.getDescription())
+                .images(toImageDTOList(model.getImages()))
+                .build();
+    }
+
+    public static List<ItemShortDTO> toShortDTOList(List<ItemModel> models) {
+        if (models == null) {
+            return Collections.emptyList();
+        }
+        return models.stream()
+                .map(ItemMapper::toShortDTO)
+                .collect(Collectors.toList());
+    }
+
     public static List<ItemDTO> toDTOList(List<ItemModel> models) {
         if (models == null) {
             return Collections.emptyList();
@@ -83,7 +105,8 @@ public class ItemMapper {
         model.setPrice(dto.getPrice());
         model.setDescription(dto.getDescription());
         // We don't map images back from DTO to model to avoid complexities.
-        // We also don't map colors back. This is typically handled separately if needed.
+        // We also don't map colors back. This is typically handled separately if
+        // needed.
         return model;
     }
 }
