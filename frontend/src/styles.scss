@@ -1,1 +1,66 @@
-/* You can add global styles to this file, and also import other style files */
+// 1. Include functions first (if needed)
+@import "bootstrap/scss/functions";
+
+// 2. Override variable defaults
+$primary: #EBCF98; // Softer Gold
+$body-bg: #FDFBF7; // Off-white
+
+// Custom admin styles are imported after variables to use them
+@import "app/admin/admin.styles.scss";
+
+html, body {
+  height: 100%;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body {
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('assets/images/flower.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  filter: blur(2px);
+  z-index: -1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5); // White overlay with 50% opacity
+  z-index: -1;
+}
+
+
+app-contact-form {
+  background-image: url('assets/images/flower.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+
+// 3. Include remaining bootstrap styles
+@import "bootstrap/scss/bootstrap.scss";
+
+.navbar-nav .nav-link.active {
+  color: $primary;
+  font-weight: bold;
+}

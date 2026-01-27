@@ -1,0 +1,16 @@
+<div class="login-container">
+  <h2>Accès Administrateur</h2>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" class="form-control" [(ngModel)]="email">
+  </div>
+  <div class="form-group">
+    <label for="password">Mot de passe</label>
+    <input type="password" id="password" class="form-control" [(ngModel)]="password" (keyup.enter)="onLogin()">
+  </div>
+  <button class="btn btn-primary" (click)="onLogin()">Connexion</button>
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+</div>
+

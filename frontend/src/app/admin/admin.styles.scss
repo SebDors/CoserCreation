@@ -1,0 +1,67 @@
+// Admin styles using the global color palette from styles.scss
+
+// Override Bootstrap variables for the admin scope if needed
+// For example, we can define new colors for danger and secondary buttons.
+$admin-danger: #c95c5c;
+$admin-secondary: #adb5bd;
+
+.login-container {
+  max-width: 400px;
+  margin: 5rem auto;
+  padding: 2rem;
+  background-color: #fff; // Use a white background
+  border: 1px solid #dee2e6; // Add a light border
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  h2 {
+    color: #343a40; // Darker text for titles
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-primary {
+    background-color: $primary; // Use global primary color
+    border-color: $primary;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.admin-dashboard {
+  background-color: transparent; // The background is handled globally
+
+  h1, h2 {
+    color: #343a40;
+    border-bottom: 2px solid $primary;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .table {
+    background-color: #fff; // White background for the table
+  }
+
+  // Override button colors only within the admin dashboard
+  .btn-primary {
+    background-color: $primary;
+    border-color: $primary;
+    color: #fff;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .btn-danger {
+    background-color: $admin-danger;
+    border-color: $admin-danger;
+    color: #fff;
+  }
+
+  .btn-secondary {
+    background-color: $admin-secondary;
+    border-color: $admin-secondary;
+    color: #fff;
+  }
+}

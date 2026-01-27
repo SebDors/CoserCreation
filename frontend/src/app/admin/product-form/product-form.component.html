@@ -1,0 +1,33 @@
+<h2>Nouveau Produit</h2>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">Titre</label>
+    <input type="text" id="name" class="form-control" formControlName="name">
+  </div>
+  <div class="form-group">
+    <label for="category">Catégorie</label>
+    <select id="category" class="form-control" formControlName="category">
+      <option value="Couture">Couture</option>
+      <option value="Tricot">Tricot</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="price">Prix</label>
+    <input type="number" id="price" class="form-control" formControlName="price">
+  </div>
+  <div class="form-group">
+    <label for="imageUrl">URL de l'image</label>
+    <input type="text" id="imageUrl" class="form-control" formControlName="imageUrl">
+  </div>
+  <div class="form-group">
+    <label for="keywords">Mots-clés (pour l'assistant IA)</label>
+    <input type="text" id="keywords" class="form-control" formControlName="keywords">
+    <button type="button" class="btn btn-secondary btn-sm mt-2" (click)="onGenerateDescription()">Générer une description</button>
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea id="description" class="form-control" formControlName="description" rows="3"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Ajouter le produit</button>
+</form>
+

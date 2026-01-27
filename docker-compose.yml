@@ -22,14 +22,13 @@ services:
     depends_on:
       - db
 
-
   frontend:
     build:
       context: ./frontend
       dockerfile: dockerfile
     ports:
       # Map host port 80 to the container's port 8080 (where Nginx is listening)
-      - "80:8080"
+      - "80:80"
     depends_on:
       - backend
 

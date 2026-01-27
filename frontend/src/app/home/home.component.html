@@ -1,0 +1,38 @@
+<header class="hero text-white text-center">
+  <div class="container">
+    <h1 class="display-4">Bijoux d'Exception & Créations Uniques</h1>
+    <p class="lead">Découvrez des bijoux uniques, faits main avec passion et délicatesse.</p>
+  </div>
+</header>
+
+<section class="container my-5">
+  <div class="row">
+    <div class="col-md-8 mx-auto text-center">
+      <h2>À Propos de CoserCreation</h2>
+      <p class="lead">
+        Bienvenue chez CoserCreation, où chaque bijou est une histoire. Nous mettons notre cœur et notre âme dans la création de pièces uniques qui vous accompagnent au quotidien. Notre passion pour l'artisanat et les matières nobles nous pousse à concevoir des bijoux d'exception, pour vous.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-light py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Nos Produits Phares</h2>
+    <div class="product-grid" *ngIf="featuredProducts$ | async as featuredProducts">
+      <div *ngFor="let product of featuredProducts" class="product-card">
+        <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+        <div class="product-info">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-price">{{ product.price | currency:'EUR' }}</p>
+        </div>
+        <div class="product-overlay">
+          <a [routerLink]="['/product', product.id]" class="buy-button">Voir détails</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a routerLink="/galerie" fragment="collection-grid" class="btn btn-lg btn-primary">Voir toute la collection</a>
+    </div>
+  </div>
+</section>

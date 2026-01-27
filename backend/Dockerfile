@@ -16,6 +16,7 @@ COPY .mvn .mvn
 COPY pom.xml .
 
 # Download dependencies using the Maven wrapper
+RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline -B
 
 # Copy the rest of the application source code into the container

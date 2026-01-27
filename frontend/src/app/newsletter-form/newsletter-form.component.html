@@ -1,0 +1,32 @@
+<section class="container my-5">
+  <h2 class="text-center mb-4">Restez Informé(e)</h2>
+  <p class="text-center lead">Abonnez-vous à notre newsletter pour découvrir les dernières créations et les nouveautés !</p>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form [formGroup]="newsletterForm" (ngSubmit)="onSubmit()">
+        <div class="input-group mb-3">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Votre adresse e-mail"
+            aria-label="Votre adresse e-mail"
+            formControlName="email"
+            [class.is-invalid]="newsletterForm.controls['email'].invalid && newsletterForm.controls['email'].touched"
+            required
+          >
+          <button class="btn btn-primary" type="submit" [disabled]="newsletterForm.invalid">S'abonner</button>
+        </div>
+        <div *ngIf="newsletterForm.controls['email'].invalid && newsletterForm.controls['email'].touched" class="invalid-feedback d-block">
+          <div *ngIf="newsletterForm.controls['email'].errors?.['required']">L'e-mail est requis.</div>
+          <div *ngIf="newsletterForm.controls['email'].errors?.['email']">Veuillez entrer une adresse e-mail valide.</div>
+        </div>
+        <div *ngIf="submissionMessage" class="alert alert-success mt-3" role="alert">
+          {{ submissionMessage }}
+        </div>
+        <div *ngIf="submissionError" class="alert alert-danger mt-3" role="alert">
+          {{ submissionError }}
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

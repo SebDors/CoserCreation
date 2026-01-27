@@ -1,0 +1,65 @@
+<section class="container my-5">
+  <h2 class="text-center mb-4">Contactez-nous</h2>
+  <p class="text-center lead">N'hésitez pas à nous envoyer un message pour toute question ou demande spécifique.</p>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="contactName" class="form-label">Nom</label>
+          <input
+            type="text"
+            class="form-control"
+            id="contactName"
+            placeholder="Votre nom"
+            formControlName="name"
+            [class.is-invalid]="contactForm.controls['name'].invalid && contactForm.controls['name'].touched"
+            required
+          >
+          <div *ngIf="contactForm.controls['name'].invalid && contactForm.controls['name'].touched" class="invalid-feedback">
+            Le nom est requis.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="contactEmail" class="form-label">Adresse e-mail</label>
+          <input
+            type="email"
+            class="form-control"
+            id="contactEmail"
+            placeholder="votre@exemple.com"
+            formControlName="email"
+            [class.is-invalid]="contactForm.controls['email'].invalid && contactForm.controls['email'].touched"
+            required
+          >
+          <div *ngIf="contactForm.controls['email'].invalid && contactForm.controls['email'].touched" class="invalid-feedback">
+            <div *ngIf="contactForm.controls['email'].errors?.['required']">L'e-mail est requis.</div>
+            <div *ngIf="contactForm.controls['email'].errors?.['email']">Veuillez entrer une adresse e-mail valide.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="contactMessage" class="form-label">Votre message</label>
+          <textarea
+            class="form-control"
+            id="contactMessage"
+            rows="5"
+            placeholder="Écrivez votre message ici..."
+            formControlName="message"
+            [class.is-invalid]="contactForm.controls['message'].invalid && contactForm.controls['message'].touched"
+            required
+          ></textarea>
+          <div *ngIf="contactForm.controls['message'].invalid && contactForm.controls['message'].touched" class="invalid-feedback">
+            Le message est requis.
+          </div>
+        </div>
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary" [disabled]="contactForm.invalid">Envoyer le message</button>
+        </div>
+        <div *ngIf="submissionMessage" class="alert alert-success mt-3" role="alert">
+          {{ submissionMessage }}
+        </div>
+        <div *ngIf="submissionError" class="alert alert-danger mt-3" role="alert">
+          {{ submissionError }}
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
