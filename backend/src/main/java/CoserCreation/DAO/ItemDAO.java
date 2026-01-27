@@ -3,9 +3,9 @@ package CoserCreation.DAO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import CoserCreation.models.creationModel;
+import CoserCreation.models.ItemModel;
 
 @Repository
-public interface creationDAO extends JpaRepository<creationModel, Integer> {
+public interface ItemDAO extends JpaRepository<ItemModel, Integer> {
 
 }

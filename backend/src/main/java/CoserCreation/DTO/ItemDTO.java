@@ -1,6 +1,7 @@
 package CoserCreation.DTO;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,16 +10,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@AllArgsConstructor // Génère un constructeur avec tous les arguments
-@Getter // Génère les getters
-@Setter // Génère les setters
-@Builder // Génère le builder
-@NoArgsConstructor // Génère un constructeur sans arguments
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 @ToString
-public class creationDTO {
+public class ItemDTO {
     private int id;
     private String title;
     private BigDecimal price;
     private String description;
-    private String image;
+    private List<ItemImageDTO> images;
 }

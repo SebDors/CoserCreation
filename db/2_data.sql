@@ -101,7 +101,7 @@ VALUES (
     (
         6,
         'media/items/SacCuirLinInterieur.jpg',
-        'Sac vue de l\'intérieur'
+        'Sac vue de l''intérieur'
     ),
     (
         7,
