@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import CoserCreation.models.ColorModel;
 import CoserCreation.models.ItemImageModel;
 import CoserCreation.models.ItemModel;
 
@@ -29,6 +30,26 @@ public class ItemMapper {
                 .collect(Collectors.toList());
     }
 
+    public static ColorDTO toDTO(ColorModel model) {
+        if (model == null) {
+            return null;
+        }
+        return ColorDTO.builder()
+                .id(model.getId())
+                .name(model.getName())
+                .image(model.getImage())
+                .build();
+    }
+
+    public static List<ColorDTO> toColorDTOList(List<ColorModel> models) {
+        if (models == null) {
+            return Collections.emptyList();
+        }
+        return models.stream()
+                .map(ItemMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
     public static ItemDTO toDTO(ItemModel model) {
         if (model == null) {
             return null;
@@ -39,6 +60,7 @@ public class ItemMapper {
                 .price(model.getPrice())
                 .description(model.getDescription())
                 .images(toImageDTOList(model.getImages()))
+                .colors(toColorDTOList(model.getColors()))
                 .build();
     }
 
@@ -61,7 +83,7 @@ public class ItemMapper {
         model.setPrice(dto.getPrice());
         model.setDescription(dto.getDescription());
         // We don't map images back from DTO to model to avoid complexities.
-        // This is typically handled separately if needed.
+        // We also don't map colors back. This is typically handled separately if needed.
         return model;
     }
 }

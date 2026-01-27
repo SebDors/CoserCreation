@@ -22,4 +22,5 @@ public class ItemDTO {
     private BigDecimal price;
     private String description;
     private List<ItemImageDTO> images;
+    private List<ColorDTO> colors;
 }
