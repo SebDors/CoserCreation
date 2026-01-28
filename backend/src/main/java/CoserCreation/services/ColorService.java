@@ -19,4 +19,8 @@ public class ColorService {
     public List<ColorDTO> getAllColors() {
         return ColorMapper.toListDTO(colorDAO.findAll());
     }
+
+    public ColorDTO getColorById(int id) {
+        return ColorMapper.toDTO(colorDAO.findById(id).orElseThrow());
+    }
 }
