@@ -56,4 +56,35 @@ public class ItemService {
     public void deleteItemById(int id) {
         itemDAO.deleteById(id);
     }
+
+    public void updateItemById(int id, ItemCreationDTO itemCreationDTO) {
+        ItemModel existingItem = itemDAO.findById(id).orElseThrow();
+        if (itemCreationDTO.getTitle() != null && !itemCreationDTO.getTitle().isEmpty()) {
+            existingItem.setTitle(itemCreationDTO.getTitle());
+        }
+        if (itemCreationDTO.getDescription() != null && !itemCreationDTO.getDescription().isEmpty()) {
+            existingItem.setDescription(itemCreationDTO.getDescription());
+        }
+
+        if (itemCreationDTO.getPrice() != null) {
+            existingItem.setPrice(itemCreationDTO.getPrice());
+        }
+
+        if (itemCreationDTO.getImages() != null) {
+            List<ItemImageModel> newImages = ItemMapper.fromImageDTOList(itemCreationDTO.getImages());
+            existingItem.getImages().clear();
+            for (ItemImageModel image : newImages) {
+                image.setItem(existingItem);
+            }
+            existingItem.getImages().addAll(newImages);
+        }
+
+        if (itemCreationDTO.getColorsId() != null) {
+            List<Integer> colorIds = itemCreationDTO.getColorsId();
+            List<ColorModel> colors = colorDAO.findAllById(colorIds);
+            existingItem.setColors(colors);
+        }
+
+        itemDAO.save(existingItem);
+    }
 }
