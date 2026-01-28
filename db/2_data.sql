@@ -70,7 +70,7 @@ VALUES (
     ),
     (
         2,
-        'media/items/Lingettelot.jpg',
+        'media/items/LingetteLot.jpg',
         'Lot de 6 lingettes lavables et réutilisables'
     ),
     (
