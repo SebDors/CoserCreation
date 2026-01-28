@@ -19,10 +19,12 @@ import CoserCreation.models.ItemModel;
 public class ItemService {
     private final ItemDAO itemDAO;
     private final ColorDAO colorDAO;
+    private final EmailService emailService;
 
-    public ItemService(ItemDAO itemDAO, ColorDAO colorDAO, ItemImageDAO itemImageDAO) {
+    public ItemService(ItemDAO itemDAO, ColorDAO colorDAO, ItemImageDAO itemImageDAO, EmailService emailService) {
         this.itemDAO = itemDAO;
         this.colorDAO = colorDAO;
+        this.emailService = emailService;
     }
 
     public List<ItemShortDTO> getAllItems() {
@@ -51,6 +53,8 @@ public class ItemService {
         }
 
         newItem = itemDAO.save(newItem);
+
+        emailService.sendNewItemNotification(newItem);
     }
 
     public void deleteItemById(int id) {

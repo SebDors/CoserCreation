@@ -28,5 +28,5 @@ public class ClientModel {
     private String email;
 
     @Column(name = "is_active")
-    private boolean isActive = true;
+    private boolean isActive;
 }
