@@ -95,18 +95,14 @@ public class ItemMapper {
                 .collect(Collectors.toList());
     }
 
-    public static ItemModel fromDTO(ItemDTO dto) {
+    public static ItemModel fromDTO(ItemCreationDTO dto) {
         if (dto == null) {
             return null;
         }
         ItemModel model = new ItemModel();
-        model.setId(dto.getId());
         model.setTitle(dto.getTitle());
         model.setPrice(dto.getPrice());
         model.setDescription(dto.getDescription());
-        // We don't map images back from DTO to model to avoid complexities.
-        // We also don't map colors back. This is typically handled separately if
-        // needed.
         return model;
     }
 }
