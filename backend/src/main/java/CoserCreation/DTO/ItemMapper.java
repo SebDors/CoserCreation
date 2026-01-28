@@ -30,6 +30,25 @@ public class ItemMapper {
                 .collect(Collectors.toList());
     }
 
+    public static ItemImageModel fromImageDTO(ItemImageDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        ItemImageModel model = new ItemImageModel();
+        model.setImageUrl(dto.getImageUrl());
+        model.setAltText(dto.getAltText());
+        return model;
+    }
+
+    public static List<ItemImageModel> fromImageDTOList(List<ItemImageDTO> dto) {
+        if (dto == null) {
+            return Collections.emptyList();
+        }
+        return dto.stream()
+                .map(ItemMapper::fromImageDTO)
+                .collect(Collectors.toList());
+    }
+
     public static ColorDTO toDTO(ColorModel model) {
         if (model == null) {
             return null;
