@@ -21,7 +21,7 @@
     <h2 class="text-center mb-4">Nos Produits Phares</h2>
     <div class="product-grid" *ngIf="featuredProducts$ | async as featuredProducts">
       <div *ngFor="let product of featuredProducts" class="product-card">
-        <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+        <img [src]="product.imageUrls[0]" [alt]="product.name" class="product-image">
         <div class="product-info">
           <h3 class="product-name">{{ product.name }}</h3>
           <p class="product-price">{{ product.price | currency:'EUR' }}</p>

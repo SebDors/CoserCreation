@@ -7,8 +7,8 @@ services:
     volumes:
       - ./db:/docker-entrypoint-initdb.d
     ports:
-      # Expose db port for local development/debugging if needed
-      - "5432:5432"
+      # Port 5432 was already allocated, so we use 5433 instead.
+      - "5433:5432"
 
   backend:
     build:
@@ -23,8 +23,8 @@ services:
 
   frontend:
     build:
-      context: ./frontend
-      dockerfile: dockerfile
+      context: .
+      dockerfile: ./frontend/dockerfile
     ports:
       # Map host port 80 to the container's port 8080 (where Nginx is listening)
       - "80:8080"

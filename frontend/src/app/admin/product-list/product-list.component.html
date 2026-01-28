@@ -11,7 +11,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let product of products$ | async">
-        <td><img [src]="product.imageUrl" [alt]="product.name" width="50"></td>
+        <td><img [src]="product.imageUrls[0]" [alt]="product.name" width="50"></td>
         <td>{{ product.name }}</td>
         <td>{{ product.price | currency:'EUR' }}</td>
         <td>
