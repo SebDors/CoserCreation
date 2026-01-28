@@ -53,13 +53,32 @@ export class DataService {
     );
   }
 
-  addProduct(product: Omit<Product, 'id'>): void {
-    // This should be updated to post to the backend.
-    console.warn('addProduct not implemented with backend yet.');
-    const currentProducts = this.products.getValue();
-    const newId = Math.max(...currentProducts.map(p => p.id)) + 1;
-    const newProduct = { ...product, id: newId };
-    this.products.next([...currentProducts, newProduct]);
+  getColors(): Observable<Color[]> {
+    return this.http.get<Color[]>('http://localhost:8080/api/colors');
+  }
+
+  addProduct(productData: any): void {
+    // This method needs to be updated to handle multipart/form-data for the image upload.
+    // The backend also needs a corresponding endpoint.
+    const itemCreationRequest = {
+      title: productData.title,
+      price: productData.price,
+      description: productData.description,
+      // The backend expects a list of integers for colorsId.
+      colorsId: productData.colors.map((id: string) => parseInt(id, 10)),
+      // The image file (productData.image) needs to be sent via FormData.
+      images: [] // Placeholder for now
+    };
+
+    console.log('Data to be sent to backend (image upload not included):', itemCreationRequest);
+    console.warn('addProduct backend request not fully implemented yet.');
+
+    // TODO: Implement a multipart/form-data request to the backend.
+    // Example:
+    // const formData = new FormData();
+    // formData.append('item', new Blob([JSON.stringify(itemCreationRequest)], { type: "application/json" }));
+    // formData.append('imageFile', productData.image);
+    // this.http.post<any>('/api/items', formData).subscribe(() => this.loadProducts());
   }
 
   deleteProduct(id: number): void {
