@@ -1,0 +1,39 @@
+.admin-container {
+  display: flex;
+  height: calc(100vh - 56px); // Assuming a header of 56px
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-right: 1px solid #dee2e6;
+
+  .nav-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+
+    &.active {
+      background-color: #0d6efd; // Using bootstrap primary blue
+      color: #fff;
+      font-weight: bold;
+    }
+
+    &:hover:not(.active) {
+      background-color: #e9ecef;
+    }
+  }
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: #ffffff;
+}
