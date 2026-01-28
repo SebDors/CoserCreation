@@ -23,4 +23,8 @@ public class ColorService {
     public ColorDTO getColorById(int id) {
         return ColorMapper.toDTO(colorDAO.findById(id).orElseThrow());
     }
+
+    public void createColor(ColorDTO colorDTO) {
+        colorDAO.save(ColorMapper.fromDTO(colorDTO));
+    }
 }
