@@ -18,12 +18,14 @@
   </div>
   <div class="mb-3">
     <label class="form-label">Couleurs</label>
-    <div class="d-flex flex-wrap">
-      <div *ngFor="let color of colors" class="form-check me-3">
-        <input class="form-check-input" type="checkbox" [value]="color.id" (change)="onColorChange($event)" [id]="'color-' + color.id">
-        <label class="form-check-label" [for]="'color-' + color.id">
-          <img [src]="color.image" [alt]="color.name" width="24" height="24" class="me-2 rounded-circle">
-          {{ color.name }}
+    <div class="color-selection-container">
+      <div *ngFor="let color of colors" class="color-card-wrapper">
+        <input class="form-check-input visually-hidden" type="checkbox" [value]="color.id" (change)="onColorChange($event)" [id]="'color-' + color.id">
+        <label class="color-card" [for]="'color-' + color.id">
+          <img [src]="color.image" [alt]="color.name" class="card-img-top">
+          <div class="card-body">
+            <p class="card-text">{{ color.name }}</p>
+          </div>
         </label>
       </div>
     </div>
