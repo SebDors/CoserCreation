@@ -1,14 +1,29 @@
 <div class="container my-5" *ngIf="product$ | async as product">
   <div class="row">
     <div class="col-md-6">
-      <img [src]="product.imageUrl" [alt]="product.name" class="img-fluid">
+      <img *ngIf="selectedImageUrl" [src]="selectedImageUrl" [alt]="product.name" class="img-fluid mb-3 main-image">
+      <div class="row">
+        <div class="col-3" *ngFor="let url of product.imageUrls">
+          <img [src]="url" [alt]="product.name" class="img-fluid thumbnail" [class.active]="url === selectedImageUrl" (click)="selectImage(url)">
+        </div>
+      </div>
     </div>
     <div class="col-md-6">
       <h2>{{ product.name }}</h2>
       <p class="lead">{{ product.description }}</p>
       <p class="h4">{{ product.price | currency:'EUR' }}</p>
-      <a routerLink="/contact" class="btn btn-contact">Contacter</a>
+
+      <div *ngIf="product.colors && product.colors.length > 0">
+        <h5 class="mt-4">Couleurs disponibles :</h5>
+        <div class="d-flex flex-wrap">
+          <div *ngFor="let color of product.colors" class="text-center me-3 mb-3" (click)="selectImage(color.image)">
+            <img [src]="color.image" [alt]="color.name" class="color-swatch" [class.active]="color.image === selectedImageUrl">
+            <p class="mb-0">{{ color.name }}</p>
+          </div>
+        </div>
+      </div>
+
+      <a routerLink="/contact" class="btn btn-contact mt-3">Contacter</a>
     </div>
   </div>
 </div>
-

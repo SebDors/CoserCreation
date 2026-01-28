@@ -9,3 +9,31 @@
   border-color: #E0C98F;
   color: #212529;
 }
+
+.color-swatch {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  object-fit: cover;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.thumbnail {
+  cursor: pointer;
+  border: 2px solid transparent;
+  padding: 2px;
+  transition: border-color 0.3s;
+}
+
+.color-swatch.active,
+.thumbnail.active {
+  border-color: #EBCF98; // Softer Gold, matching the brand
+}
+
+.main-image {
+  height: 400px;
+  object-fit: cover;
+  width: 100%;
+}

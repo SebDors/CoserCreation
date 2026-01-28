@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { Product } from '../product.model';
 import { DataService } from '../data.service';
 import { CommonModule } from '@angular/common';
@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductDetailComponent implements OnInit {
   product$!: Observable<Product | undefined>;
+  selectedImageUrl: string | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +27,16 @@ export class ProductDetailComponent implements OnInit {
       switchMap(params => {
         const id = Number(params.get('id'));
         return this.dataService.getProductById(id);
+      }),
+      tap(product => {
+        if (product && product.imageUrls && product.imageUrls.length > 0) {
+          this.selectedImageUrl = product.imageUrls[0];
+        }
       })
     );
+  }
+
+  selectImage(url: string): void {
+    this.selectedImageUrl = url;
   }
 }
