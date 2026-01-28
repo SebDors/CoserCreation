@@ -52,4 +52,8 @@ public class ItemService {
 
         newItem = itemDAO.save(newItem);
     }
+
+    public void deleteItemById(int id) {
+        itemDAO.deleteById(id);
+    }
 }

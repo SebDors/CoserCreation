@@ -27,4 +27,8 @@ public class ColorService {
     public void createColor(ColorDTO colorDTO) {
         colorDAO.save(ColorMapper.fromDTO(colorDTO));
     }
+
+    public void deleteColorById(int id) {
+        colorDAO.deleteById(id);
+    }
 }
