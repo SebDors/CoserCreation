@@ -47,7 +47,7 @@ public class ItemModel {
     @JsonManagedReference
     private List<ItemImageModel> images;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "item_colors",
         joinColumns = @JoinColumn(name = "item_id"),
