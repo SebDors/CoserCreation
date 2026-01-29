@@ -13,8 +13,13 @@
     <textarea id="description" class="form-control" formControlName="description" rows="3"></textarea>
   </div>
   <div class="mb-3">
-    <label for="image" class="form-label">Image</label>
-    <input type="file" id="image" class="form-control" (change)="onFileChange($event)">
+    <label for="images" class="form-label">Images</label>
+    <input type="file" id="images" class="form-control" (change)="onFileChange($event)" multiple>
+    <div class="image-previews mt-2" *ngIf="imagePreviews.length > 0">
+      <div *ngFor="let preview of imagePreviews" class="image-preview-item">
+        <img [src]="preview" alt="Image preview">
+      </div>
+    </div>
   </div>
   <div class="mb-3">
     <label class="form-label">Couleurs</label>

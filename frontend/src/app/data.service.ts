@@ -35,7 +35,7 @@ export class DataService {
         name: item.title, // Map title to name
         price: item.price,
         description: item.description,
-        imageUrls: item.images && item.images.length > 0 ? item.images.map(img => img.imageUrl) : ['assets/placeholder.jpg'],
+        imageUrls: item.images && item.images.length > 0 ? item.images.map(img => img.imageUrl) : ['assets/images/placeholder.svg'],
         colors: item.colors || []
       }))),
       tap(products => this.products.next(products))
@@ -61,15 +61,25 @@ export class DataService {
   }
 
   addProduct(productData: any): void {
-    const itemCreationRequest = {
+    const formData = new FormData();
+
+    // Append image files
+    if (productData.images) {
+      for (let i = 0; i < productData.images.length; i++) {
+        formData.append('images', productData.images[i]);
+      }
+    }
+
+    // Create the DTO and append it as a JSON string
+    const itemCreationDTO = {
       title: productData.title,
       price: productData.price,
       description: productData.description,
-      colorsId: productData.colors.map((id: string) => parseInt(id, 10)),
-      images: [] // Images will be handled later
+      colorsId: productData.colors.map((id: string) => parseInt(id, 10))
     };
+    formData.append('item', new Blob([JSON.stringify(itemCreationDTO)], { type: 'application/json' }));
 
-    this.http.post(this.apiUrl, itemCreationRequest).pipe(
+    this.http.post(this.apiUrl, formData).pipe(
       tap(() => this.loadProducts())
     ).subscribe({
       next: () => this.toastr.success('Création ajoutée avec succès !', 'Succès'),
