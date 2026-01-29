@@ -25,7 +25,7 @@ export class ProductFormComponent implements OnInit {
       title: ['', Validators.required],
       price: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
       description: ['', Validators.required],
-      image: [null, Validators.required],
+      image: [null],
       colors: this.fb.array([])
     });
 
