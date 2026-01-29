@@ -58,35 +58,29 @@ export class DataService {
   }
 
   addProduct(productData: any): void {
-    // This method needs to be updated to handle multipart/form-data for the image upload.
-    // The backend also needs a corresponding endpoint.
     const itemCreationRequest = {
       title: productData.title,
       price: productData.price,
       description: productData.description,
-      // The backend expects a list of integers for colorsId.
       colorsId: productData.colors.map((id: string) => parseInt(id, 10)),
-      // The image file (productData.image) needs to be sent via FormData.
-      images: [] // Placeholder for now
+      images: [] // Images will be handled later
     };
 
-    console.log('Data to be sent to backend (image upload not included):', itemCreationRequest);
-    console.warn('addProduct backend request not fully implemented yet.');
-
-    // TODO: Implement a multipart/form-data request to the backend.
-    // Example:
-    // const formData = new FormData();
-    // formData.append('item', new Blob([JSON.stringify(itemCreationRequest)], { type: "application/json" }));
-    // formData.append('imageFile', productData.image);
-    // this.http.post<any>('/api/items', formData).subscribe(() => this.loadProducts());
+    this.http.post(this.apiUrl, itemCreationRequest).pipe(
+      tap(() => this.loadProducts())
+    ).subscribe({
+      next: () => console.log('Product added successfully'),
+      error: (err) => console.error('Error adding product', err)
+    });
   }
 
   deleteProduct(id: number): void {
-    // This should be updated to send a delete request to the backend.
-    console.warn('deleteProduct not implemented with backend yet.');
-    const currentProducts = this.products.getValue();
-    const updatedProducts = currentProducts.filter(product => product.id !== id);
-    this.products.next(updatedProducts);
+    this.http.delete(`${this.apiUrl}/${id}`).pipe(
+      tap(() => this.loadProducts())
+    ).subscribe({
+      next: () => console.log('Product deleted successfully'),
+      error: (err) => console.error('Error deleting product', err)
+    });
   }
 
   subscribeToNewsletter(email: string): Promise<any> {
