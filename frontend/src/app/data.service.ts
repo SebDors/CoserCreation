@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { Product, Color } from './product.model';
+import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 
 // Define a type for the backend item structure for better type safety
 interface BackendItem {
@@ -23,7 +24,7 @@ export class DataService {
   private products = new BehaviorSubject<Product[]>([]);
   products$ = this.products.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) { // Inject ToastrService
     this.loadProducts();
   }
 
@@ -38,7 +39,9 @@ export class DataService {
         colors: item.colors || []
       }))),
       tap(products => this.products.next(products))
-    ).subscribe();
+    ).subscribe({
+      error: (err) => this.toastr.error('Erreur lors du chargement des créations', 'Erreur')
+    });
   }
 
   getProducts(): Observable<Product[]> {
@@ -69,8 +72,8 @@ export class DataService {
     this.http.post(this.apiUrl, itemCreationRequest).pipe(
       tap(() => this.loadProducts())
     ).subscribe({
-      next: () => console.log('Product added successfully'),
-      error: (err) => console.error('Error adding product', err)
+      next: () => this.toastr.success('Création ajoutée avec succès !', 'Succès'),
+      error: (err) => this.toastr.error('Erreur lors de l\'ajout de la création', 'Erreur')
     });
   }
 
@@ -78,8 +81,8 @@ export class DataService {
     this.http.delete(`${this.apiUrl}/${id}`).pipe(
       tap(() => this.loadProducts())
     ).subscribe({
-      next: () => console.log('Product deleted successfully'),
-      error: (err) => console.error('Error deleting product', err)
+      next: () => this.toastr.success('Création supprimée avec succès !', 'Succès'),
+      error: (err) => this.toastr.error('Erreur lors de la suppression de la création', 'Erreur')
     });
   }
 
