@@ -14,7 +14,7 @@ import { Color } from '../../product.model';
 export class ProductFormComponent implements OnInit {
   productForm!: FormGroup;
   colors: Color[] = [];
-  imagePreviews: string[] = [];
+  imagePreviews: { preview: string, file: File }[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -27,6 +27,7 @@ export class ProductFormComponent implements OnInit {
       price: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
       description: ['', Validators.required],
       images: [null],
+      image_alts: this.fb.array([]),
       colors: this.fb.array([])
     });
 
@@ -35,8 +36,13 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
+  get image_alts(): FormArray {
+    return this.productForm.get('image_alts') as FormArray;
+  }
+
   onFileChange(event: any) {
     this.imagePreviews = [];
+    this.image_alts.clear();
     if (event.target.files && event.target.files.length > 0) {
       const files = event.target.files;
       this.productForm.patchValue({
@@ -44,11 +50,13 @@ export class ProductFormComponent implements OnInit {
       });
 
       for (let i = 0; i < files.length; i++) {
+        const file = files[i];
         const reader = new FileReader();
         reader.onload = () => {
-          this.imagePreviews.push(reader.result as string);
+          this.imagePreviews.push({ preview: reader.result as string, file: file });
+          this.image_alts.push(this.fb.control(''));
         };
-        reader.readAsDataURL(files[i]);
+        reader.readAsDataURL(file);
       }
     }
   }
@@ -76,6 +84,7 @@ export class ProductFormComponent implements OnInit {
       // Logic will be updated later to include images and colors
       this.dataService.addProduct(this.productForm.value);
       this.productForm.reset();
+      this.image_alts.clear();
       this.imagePreviews = []; // Reset previews
     }
   }

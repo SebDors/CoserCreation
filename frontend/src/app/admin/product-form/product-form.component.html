@@ -15,9 +15,12 @@
   <div class="mb-3">
     <label for="images" class="form-label">Images</label>
     <input type="file" id="images" class="form-control" (change)="onFileChange($event)" multiple>
-    <div class="image-previews mt-2" *ngIf="imagePreviews.length > 0">
-      <div *ngFor="let preview of imagePreviews" class="image-preview-item">
-        <img [src]="preview" alt="Image preview">
+    <div *ngIf="imagePreviews.length > 0" class="image-previews-container mt-2" formArrayName="image_alts">
+      <div *ngFor="let preview of imagePreviews; let i = index" class="image-card">
+        <img [src]="preview.preview" alt="Image preview" class="card-img-top">
+        <div class="card-body">
+          <textarea class="form-control" [formControlName]="i" placeholder="Décrivez votre image" rows="3"></textarea>
+        </div>
       </div>
     </div>
   </div>
@@ -25,7 +28,8 @@
     <label class="form-label">Couleurs</label>
     <div class="color-selection-container">
       <div *ngFor="let color of colors" class="color-card-wrapper">
-        <input class="form-check-input visually-hidden" type="checkbox" [value]="color.id" (change)="onColorChange($event)" [id]="'color-' + color.id">
+        <input class="form-check-input visually-hidden" type="checkbox" [value]="color.id"
+          (change)="onColorChange($event)" [id]="'color-' + color.id">
         <label class="color-card" [for]="'color-' + color.id">
           <img [src]="color.image" [alt]="color.name" class="card-img-top">
           <div class="card-body">

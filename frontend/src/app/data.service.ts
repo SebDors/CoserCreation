@@ -70,6 +70,13 @@ export class DataService {
       }
     }
 
+    // Append alt texts
+    if (productData.image_alts) {
+      for (let i = 0; i < productData.image_alts.length; i++) {
+        formData.append('altTexts', productData.image_alts[i]);
+      }
+    }
+
     // Create the DTO and append it as a JSON string
     const itemCreationDTO = {
       title: productData.title,

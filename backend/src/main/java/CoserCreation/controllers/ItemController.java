@@ -42,8 +42,9 @@ public class ItemController {
     @PostMapping("")
     public void createItem(
             @RequestPart("item") ItemCreationDTO itemCreationDTO,
-            @RequestParam(value = "images", required = false) MultipartFile[] images) {
-        itemService.createItem(itemCreationDTO, images);
+            @RequestParam(value = "images", required = false) MultipartFile[] images,
+            @RequestParam(value = "altTexts", required = false) String[] altTexts) {
+        itemService.createItem(itemCreationDTO, images, altTexts);
     }
 
     @DeleteMapping("/{id}")
@@ -55,7 +56,8 @@ public class ItemController {
     public void updateItemById(
             @PathVariable int id,
             @RequestPart("item") ItemCreationDTO itemCreationDTO,
-            @RequestParam(value = "images", required = false) MultipartFile[] images) {
-        itemService.updateItemById(id, itemCreationDTO, images);
+            @RequestParam(value = "images", required = false) MultipartFile[] images,
+            @RequestParam(value = "altTexts", required = false) String[] altTexts) {
+        itemService.updateItemById(id, itemCreationDTO, images, altTexts);
     }
 }

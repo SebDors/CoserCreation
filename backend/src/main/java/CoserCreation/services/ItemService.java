@@ -47,7 +47,7 @@ public class ItemService {
         return ItemMapper.toDTO(itemDAO.findById(id).orElseThrow());
     }
 
-    public void createItem(ItemCreationDTO itemCreationDTO, MultipartFile[] images) {
+    public void createItem(ItemCreationDTO itemCreationDTO, MultipartFile[] images, String[] altTexts) {
         ItemModel newItem = ItemMapper.fromDTO(itemCreationDTO);
 
         List<Integer> colorIds = itemCreationDTO.getColorsId();
@@ -59,7 +59,7 @@ public class ItemService {
         ItemModel savedItem = itemDAO.save(newItem);
 
         if (images != null && images.length > 0) {
-            saveImages(savedItem, images);
+            saveImages(savedItem, images, altTexts);
         }
 
         emailService.sendNewItemNotification(savedItem);
@@ -69,7 +69,7 @@ public class ItemService {
         itemDAO.deleteById(id);
     }
 
-    public void updateItemById(int id, ItemCreationDTO itemCreationDTO, MultipartFile[] images) {
+    public void updateItemById(int id, ItemCreationDTO itemCreationDTO, MultipartFile[] images, String[] altTexts) {
         ItemModel existingItem = itemDAO.findById(id).orElseThrow();
         if (itemCreationDTO.getTitle() != null && !itemCreationDTO.getTitle().isEmpty()) {
             existingItem.setTitle(itemCreationDTO.getTitle());
@@ -92,11 +92,11 @@ public class ItemService {
 
         if (images != null && images.length > 0) {
             // Here you might want to delete old images first
-            saveImages(savedItem, images);
+            saveImages(savedItem, images, altTexts);
         }
     }
 
-    private void saveImages(ItemModel item, MultipartFile[] images) {
+    private void saveImages(ItemModel item, MultipartFile[] images, String[] altTexts) {
         File directory = new File(fileSystemUploadDir);
         if (!directory.exists()) {
             directory.mkdirs();
@@ -114,6 +114,9 @@ public class ItemService {
                 Files.write(filePath, image.getBytes());
                 ItemImageModel itemImage = new ItemImageModel();
                 itemImage.setImageUrl(webPath + newFileName);
+                if (altTexts != null && i < altTexts.length) {
+                    itemImage.setAltText(altTexts[i]);
+                }
                 itemImage.setItem(item);
                 itemImageDAO.save(itemImage);
                 itemImages.add(itemImage);
