@@ -1,0 +1,30 @@
+<h1>Gestion des Couleurs</h1>
+
+<div class="accordion mt-4" id="colorsAccordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingColorsList">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseColorsList" aria-expanded="true" aria-controls="collapseColorsList">
+        Toutes les couleurs
+      </button>
+    </h2>
+    <div id="collapseColorsList" class="accordion-collapse collapse show" aria-labelledby="headingColorsList" data-bs-parent="#colorsAccordion">
+      <div class="accordion-body">
+        <app-color-list></app-color-list>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingAddColor">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAddColor" aria-expanded="false" aria-controls="collapseAddColor">
+        Ajouter une nouvelle couleur
+      </button>
+    </h2>
+    <div id="collapseAddColor" class="accordion-collapse collapse" aria-labelledby="headingAddColor" data-bs-parent="#colorsAccordion">
+      <div class="accordion-body">
+        <app-color-form (colorAdded)="onColorAdded()"></app-color-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

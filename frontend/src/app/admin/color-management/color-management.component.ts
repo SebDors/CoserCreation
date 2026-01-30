@@ -1,11 +1,20 @@
 import { Component } from '@angular/core';
+import { ColorListComponent } from '../color-list/color-list.component';
+import { ColorFormComponent } from '../color-form/color-form.component';
+import { RouterOutlet } from '@angular/router'; // Import RouterOutlet for nested routes
 
 @Component({
   selector: 'app-color-management',
   standalone: true,
-  template: `
-    <h1>Gestion des Couleurs</h1>
-    <p>Le formulaire et la liste pour la gestion des couleurs seront implémentés ici.</p>
-  `
+  imports: [ColorListComponent, ColorFormComponent, RouterOutlet],
+  templateUrl: './color-management.component.html',
+  styleUrls: ['./color-management.component.scss'] // Assuming you might want specific styles
 })
-export class ColorManagementComponent {}
+export class ColorManagementComponent {
+  onColorAdded(): void {
+    // Logic to refresh the color list if needed.
+    // For now, the color-list component's Observable handles refreshing on its own,
+    // but in a more complex scenario, you might want to call a method on the list component.
+    console.log('Color added, refreshing list...');
+  }
+}

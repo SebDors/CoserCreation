@@ -6,6 +6,9 @@ import { ProductManagementComponent } from './product-management/product-managem
 import { ColorManagementComponent } from './color-management/color-management.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 
+import { ColorEditComponent } from './color-edit/color-edit.component';
+// ... other imports
+
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -16,6 +19,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'creations', pathMatch: 'full' },
       { path: 'creations/edit/:id', component: ProductEditComponent },
       { path: 'creations', component: ProductManagementComponent },
+      { path: 'couleurs/edit/:id', component: ColorEditComponent }, // Add this
       { path: 'couleurs', component: ColorManagementComponent }
     ]
   }
