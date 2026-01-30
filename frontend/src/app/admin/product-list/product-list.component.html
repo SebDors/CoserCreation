@@ -15,7 +15,7 @@
         <td>{{ product.name }}</td>
         <td>{{ product.price | currency:'EUR' }}</td>
         <td>
-          <button class="btn btn-secondary btn-sm me-2">
+          <button class="btn btn-secondary btn-sm me-2" (click)="onEdit(product.id)">
             <i class="fas fa-pencil-alt"></i> Modifier
           </button>
           <button class="btn btn-danger btn-sm" (click)="onDelete(product.id)">

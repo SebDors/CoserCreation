@@ -14,6 +14,15 @@ interface BackendItem {
   colors: Color[];
 }
 
+interface BackendItemDetail {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  images: { id: number, imageUrl: string, altText: string }[];
+  colors: Color[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -56,6 +65,10 @@ export class DataService {
     );
   }
 
+  getProductDetails(id: number): Observable<BackendItemDetail> {
+    return this.http.get<BackendItemDetail>(`${this.apiUrl}/${id}`);
+  }
+
   getColors(): Observable<Color[]> {
     return this.http.get<Color[]>('http://localhost:8080/api/colors');
   }
@@ -91,6 +104,43 @@ export class DataService {
     ).subscribe({
       next: () => this.toastr.success('Création ajoutée avec succès !', 'Succès'),
       error: (err) => this.toastr.error('Erreur lors de l\'ajout de la création', 'Erreur')
+    });
+  }
+
+  updateProduct(id: number, productData: any, deletedImageIds: number[]): void {
+    const formData = new FormData();
+
+    // Append new image files
+    if (productData.new_images) {
+      for (let i = 0; i < productData.new_images.length; i++) {
+        formData.append('new_images', productData.new_images[i]);
+      }
+    }
+
+    // Append new alt texts
+    if (productData.new_image_alts) {
+      for (let i = 0; i < productData.new_image_alts.length; i++) {
+        formData.append('new_image_alts', productData.new_image_alts[i]);
+      }
+    }
+
+    // Create the DTO for the update
+    const itemUpdateDTO = {
+      title: productData.title,
+      price: productData.price,
+      description: productData.description,
+      colorsId: productData.colors,
+      existingImages: productData.existing_images,
+      deletedImageIds: deletedImageIds
+    };
+
+    formData.append('item', new Blob([JSON.stringify(itemUpdateDTO)], { type: 'application/json' }));
+
+    this.http.put(`${this.apiUrl}/${id}`, formData).pipe(
+      tap(() => this.loadProducts())
+    ).subscribe({
+      next: () => this.toastr.success('Création mise à jour avec succès !', 'Succès'),
+      error: (err) => this.toastr.error('Erreur lors de la mise à jour', 'Erreur')
     });
   }
 

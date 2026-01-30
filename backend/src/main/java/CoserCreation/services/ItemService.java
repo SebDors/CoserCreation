@@ -16,11 +16,14 @@ import CoserCreation.DAO.ItemDAO;
 import CoserCreation.DAO.ItemImageDAO;
 import CoserCreation.DTO.ItemCreationDTO;
 import CoserCreation.DTO.ItemDTO;
+import CoserCreation.DTO.ItemImageUpdateDTO;
 import CoserCreation.DTO.ItemMapper;
 import CoserCreation.DTO.ItemShortDTO;
+import CoserCreation.DTO.ItemUpdateDTO;
 import CoserCreation.models.ColorModel;
 import CoserCreation.models.ItemImageModel;
 import CoserCreation.models.ItemModel;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ItemService {
@@ -59,55 +62,96 @@ public class ItemService {
         ItemModel savedItem = itemDAO.save(newItem);
 
         if (images != null && images.length > 0) {
-            saveImages(savedItem, images, altTexts);
+            saveNewImages(savedItem, images, altTexts);
         }
 
         emailService.sendNewItemNotification(savedItem);
     }
 
     public void deleteItemById(int id) {
+        // Before deleting the item, delete its images from the filesystem
+        ItemModel item = itemDAO.findById(id).orElseThrow(() -> new RuntimeException("Item not found"));
+        if (item.getImages() != null) {
+            for (ItemImageModel image : item.getImages()) {
+                try {
+                    String fileName = image.getImageUrl().replace(webPath, "");
+                    Files.deleteIfExists(Paths.get(fileSystemUploadDir + fileName));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         itemDAO.deleteById(id);
     }
 
-    public void updateItemById(int id, ItemCreationDTO itemCreationDTO, MultipartFile[] images, String[] altTexts) {
-        ItemModel existingItem = itemDAO.findById(id).orElseThrow();
-        if (itemCreationDTO.getTitle() != null && !itemCreationDTO.getTitle().isEmpty()) {
-            existingItem.setTitle(itemCreationDTO.getTitle());
-        }
-        if (itemCreationDTO.getDescription() != null && !itemCreationDTO.getDescription().isEmpty()) {
-            existingItem.setDescription(itemCreationDTO.getDescription());
-        }
+    @Transactional
+    public void updateItemById(int id, ItemUpdateDTO itemUpdateDTO, MultipartFile[] newImages, String[] newImageAlts) {
+        ItemModel existingItem = itemDAO.findById(id).orElseThrow(() -> new RuntimeException("Item not found"));
 
-        if (itemCreationDTO.getPrice() != null) {
-            existingItem.setPrice(itemCreationDTO.getPrice());
+        // Update textual data and colors
+        if (itemUpdateDTO.getTitle() != null && !itemUpdateDTO.getTitle().isEmpty()) {
+            existingItem.setTitle(itemUpdateDTO.getTitle());
         }
-
-        if (itemCreationDTO.getColorsId() != null) {
-            List<Integer> colorIds = itemCreationDTO.getColorsId();
-            List<ColorModel> colors = colorDAO.findAllById(colorIds);
+        if (itemUpdateDTO.getDescription() != null && !itemUpdateDTO.getDescription().isEmpty()) {
+            existingItem.setDescription(itemUpdateDTO.getDescription());
+        }
+        if (itemUpdateDTO.getPrice() != null) {
+            existingItem.setPrice(itemUpdateDTO.getPrice());
+        }
+        if (itemUpdateDTO.getColorsId() != null) {
+            List<ColorModel> colors = colorDAO.findAllById(itemUpdateDTO.getColorsId());
             existingItem.setColors(colors);
         }
-        
-        ItemModel savedItem = itemDAO.save(existingItem);
 
-        if (images != null && images.length > 0) {
-            // Here you might want to delete old images first
-            saveImages(savedItem, images, altTexts);
+        // Update existing image alt texts
+        if (itemUpdateDTO.getExistingImages() != null) {
+            for (ItemImageUpdateDTO imageUpdate : itemUpdateDTO.getExistingImages()) {
+                ItemImageModel imageModel = itemImageDAO.findById(imageUpdate.getId())
+                        .orElseThrow(() -> new RuntimeException("Image not found"));
+                imageModel.setAltText(imageUpdate.getAltText());
+                itemImageDAO.save(imageModel);
+            }
         }
+
+        // Delete images marked for deletion
+        if (itemUpdateDTO.getDeletedImageIds() != null) {
+            for (Integer imageId : itemUpdateDTO.getDeletedImageIds()) {
+                ItemImageModel imageModel = itemImageDAO.findById(imageId)
+                        .orElseThrow(() -> new RuntimeException("Image to delete not found"));
+                
+                try {
+                    String fileName = imageModel.getImageUrl().replace(webPath, "");
+                    Files.deleteIfExists(Paths.get(fileSystemUploadDir + fileName));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                existingItem.getImages().remove(imageModel);
+                itemImageDAO.deleteById(imageId);
+            }
+        }
+
+        // Save new images
+        if (newImages != null && newImages.length > 0) {
+            saveNewImages(existingItem, newImages, newImageAlts);
+        }
+        
+        itemDAO.save(existingItem);
     }
 
-    private void saveImages(ItemModel item, MultipartFile[] images, String[] altTexts) {
+    private void saveNewImages(ItemModel item, MultipartFile[] images, String[] altTexts) {
         File directory = new File(fileSystemUploadDir);
         if (!directory.exists()) {
             directory.mkdirs();
         }
 
-        List<ItemImageModel> itemImages = new ArrayList<>();
+        int existingImageCount = item.getImages() != null ? item.getImages().size() : 0;
+        List<ItemImageModel> newImageModels = new ArrayList<>();
 
         for (int i = 0; i < images.length; i++) {
             MultipartFile image = images[i];
             String fileExtension = getFileExtension(image.getOriginalFilename());
-            String newFileName = item.getTitle().replaceAll("\\s+", "_") + "_" + (i + 1) + fileExtension;
+            String newFileName = item.getTitle().replaceAll("\\s+", "_") + "_" + (existingImageCount + i + 1) + "_" + System.currentTimeMillis() + fileExtension;
             Path filePath = Paths.get(fileSystemUploadDir + newFileName);
 
             try {
@@ -118,15 +162,13 @@ public class ItemService {
                     itemImage.setAltText(altTexts[i]);
                 }
                 itemImage.setItem(item);
-                itemImageDAO.save(itemImage);
-                itemImages.add(itemImage);
+                newImageModels.add(itemImage);
             } catch (IOException e) {
-                // Handle exception
                 e.printStackTrace();
             }
         }
-        item.setImages(itemImages);
-        itemDAO.save(item);
+        item.getImages().addAll(newImageModels);
+        itemImageDAO.saveAll(newImageModels);
     }
 
     private String getFileExtension(String fileName) {

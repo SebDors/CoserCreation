@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import CoserCreation.services.ItemService;
 import CoserCreation.DTO.ItemCreationDTO;
+import CoserCreation.DTO.ItemUpdateDTO;
 import CoserCreation.DTO.ItemDTO;
 import CoserCreation.DTO.ItemShortDTO;
 
@@ -55,9 +56,9 @@ public class ItemController {
     @PutMapping("/{id}")
     public void updateItemById(
             @PathVariable int id,
-            @RequestPart("item") ItemCreationDTO itemCreationDTO,
-            @RequestParam(value = "images", required = false) MultipartFile[] images,
-            @RequestParam(value = "altTexts", required = false) String[] altTexts) {
-        itemService.updateItemById(id, itemCreationDTO, images, altTexts);
+            @RequestPart("item") ItemUpdateDTO itemUpdateDTO,
+            @RequestParam(value = "new_images", required = false) MultipartFile[] newImages,
+            @RequestParam(value = "new_image_alts", required = false) String[] newImageAlts) {
+        itemService.updateItemById(id, itemUpdateDTO, newImages, newImageAlts);
     }
 }
