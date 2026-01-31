@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap, map } from 'rxjs/operators';
 import { Product } from '../product.model';
 import { DataService } from '../data.service';
 import { CommonModule } from '@angular/common';
@@ -26,7 +26,20 @@ export class ProductDetailComponent implements OnInit {
     this.product$ = this.route.paramMap.pipe(
       switchMap(params => {
         const id = Number(params.get('id'));
-        return this.dataService.getProductById(id);
+        return this.dataService.getProductDetails(id);
+      }),
+      map(item => {
+        if (!item) {
+          return undefined;
+        }
+        return {
+          id: item.id,
+          name: item.title,
+          price: item.price,
+          description: item.description,
+          imageUrls: item.images && item.images.length > 0 ? item.images.map(img => img.imageUrl) : ['assets/images/placeholder.svg'],
+          colors: item.colors || []
+        };
       }),
       tap(product => {
         if (product && product.imageUrls && product.imageUrls.length > 0) {

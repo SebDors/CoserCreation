@@ -15,10 +15,14 @@
 
       <div *ngIf="product.colors && product.colors.length > 0">
         <h5 class="mt-4">Couleurs disponibles :</h5>
-        <div class="d-flex flex-wrap">
-          <div *ngFor="let color of product.colors" class="text-center me-3 mb-3" (click)="selectImage(color.image)">
-            <img [src]="color.image" [alt]="color.name" class="color-swatch" [class.active]="color.image === selectedImageUrl">
-            <p class="mb-0">{{ color.name }}</p>
+        <div class="color-selection-container">
+          <div *ngFor="let color of product.colors" class="color-card-wrapper" (click)="selectImage(color.image)">
+            <div class="color-card" [class.active]="color.image === selectedImageUrl">
+              <img [src]="color.image" [alt]="color.name" class="card-img-top">
+              <div class="card-body">
+                <p class="card-text">{{ color.name }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

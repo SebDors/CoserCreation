@@ -60,7 +60,7 @@ VALUES (
     ),
     (
         1,
-        'media/items/bonnetVueHaut.jpg',
+        'media/items/BonnetVueHaut.jpg',
         'Bonnet porté sur la tête vue de haut'
     ),
     (
