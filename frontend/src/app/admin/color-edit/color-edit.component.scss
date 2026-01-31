@@ -1,0 +1,12 @@
+/* Add any page-specific styles here */
+.image-preview img {
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: contain;
+}
+
+h2 {
+  border-bottom: 2px solid #0d6efd;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}

@@ -1,3 +1,13 @@
+/* Add any page-specific styles here if needed.
+   The component will inherit the main dashboard styles.
+*/
+h2 {
+  border-bottom: 2px solid #0d6efd; // Use a theme color for the heading underline
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Image Card Styles (copied from product-form.component.scss) */
 .image-previews-container {
   display: flex;
   flex-wrap: wrap;
@@ -5,15 +15,17 @@
 }
 
 .image-card {
-  width: 150px;
+  width: 180px; // A bit wider for the textarea
   border: 1px solid #dee2e6;
   border-radius: 8px;
   overflow: hidden;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .card-img-top {
     width: 100%;
-    height: 120px;
+    height: 150px;
     object-fit: cover;
   }
 
@@ -21,8 +33,15 @@
     padding: 0.75rem;
     background-color: #f8f9fa;
   }
+
+  .card-footer {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+  }
 }
 
+/* Color Selection Styles (copied from product-form.component.scss, with max-height/overflow added) */
 .color-selection-container {
   display: flex;
   flex-wrap: wrap;

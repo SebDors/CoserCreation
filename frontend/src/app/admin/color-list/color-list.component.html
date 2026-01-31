@@ -1,0 +1,25 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Nom</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let color of colors$ | async">
+        <td><img [src]="color.image" [alt]="color.name" width="50"></td>
+        <td>{{ color.name }}</td>
+        <td>
+          <button class="btn btn-secondary btn-sm me-2" (click)="onEdit(color.id)">
+            <i class="fas fa-pencil-alt"></i> Modifier
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="onDelete(color.id)">
+            <i class="fas fa-trash"></i> Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,92 @@
+<div class="container mt-4">
+  <form [formGroup]="productForm" (ngSubmit)="onSave()">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Modifier la création</h2>
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+        <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Enregistrer les modifications</button>
+      </div>
+    </div>
+
+    <!-- Title and Price -->
+    <div class="row">
+      <div class="col-md-8">
+        <div class="mb-3">
+          <label for="edit-title" class="form-label">Titre</label>
+          <input type="text" id="edit-title" class="form-control" formControlName="title">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mb-3">
+          <label for="edit-price" class="form-label">Prix</label>
+          <input type="number" id="edit-price" class="form-control" formControlName="price" placeholder="12.34">
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="edit-description" class="form-label">Description</label>
+      <textarea id="edit-description" class="form-control" formControlName="description" rows="3"></textarea>
+    </div>
+
+    <hr class="my-4">
+
+    <!-- Image Management -->
+    <div class="mb-3">
+      <h3>Images</h3>
+      
+      <!-- Existing Image Management -->
+      <div class="mb-4">
+        <label class="form-label">Images Actuelles</label>
+        <div *ngIf="product && existing_images.controls.length > 0" class="image-previews-container" formArrayName="existing_images">
+          <div *ngFor="let control of existing_images.controls; let i = index" [formGroupName]="i">
+            <div class="image-card" *ngIf="!isImageDeleted(control.value.id)">
+              <img [src]="control.value.imageUrl" [alt]="control.value.altText" class="card-img-top">
+              <div class="card-body">
+                <textarea class="form-control" formControlName="altText" rows="3" placeholder="Texte alternatif"></textarea>
+              </div>
+              <div class="card-footer">
+                 <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteImage(control.value.id)">Supprimer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+         <p *ngIf="!product || existing_images.controls.length === 0">Aucune image existante.</p>
+      </div>
+
+      <!-- Add New Images -->
+      <div class="mb-3">
+        <label for="new-images" class="form-label">Ajouter de nouvelles images</label>
+        <input type="file" id="new-images" class="form-control" (change)="onFileChange($event)" multiple>
+        <div *ngIf="newImagePreviews.length > 0" class="image-previews-container mt-2" formArrayName="new_image_alts">
+          <div *ngFor="let preview of newImagePreviews; let i = index" class="image-card">
+            <img [src]="preview.preview" alt="Nouvelle image" class="card-img-top">
+            <div class="card-body">
+              <textarea class="form-control" [formControlName]="i" placeholder="Texte alternatif" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <!-- Color Management -->
+    <div class="mb-3">
+      <h3>Couleurs</h3>
+      <div class="color-selection-container">
+        <div *ngFor="let color of allColors" class="color-card-wrapper">
+          <input class="form-check-input visually-hidden" type="checkbox" [value]="color.id" [checked]="isColorSelected(color.id)" (change)="onColorChange($event)" [id]="'edit-color-' + color.id">
+          <label class="color-card" [for]="'edit-color-' + color.id">
+            <img [src]="color.image" [alt]="color.name" class="card-img-top">
+            <div class="card-body">
+              <p class="card-text">{{ color.name }}</p>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>

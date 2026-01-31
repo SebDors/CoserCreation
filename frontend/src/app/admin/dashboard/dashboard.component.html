@@ -1,19 +1,9 @@
-<div class="admin-dashboard p-4">
-  <h1 class="mb-4">Espace Administration</h1>
-  <div class="row">
-    <div class="col-lg-5 mb-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <app-product-form></app-product-form>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-7 mb-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <app-product-list></app-product-list>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="admin-container">
+  <nav class="sidebar">
+    <a routerLink="creations" routerLinkActive="active" class="nav-link">Créations</a>
+    <a routerLink="couleurs" routerLinkActive="active" class="nav-link">Couleurs</a>
+  </nav>
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
 </div>

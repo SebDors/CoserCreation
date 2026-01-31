@@ -18,6 +18,8 @@ services:
       - "8080:8080"
     env_file:
       - ./.env
+    volumes:
+      - ./media:/app/media
     depends_on:
       - db
 
@@ -28,6 +30,8 @@ services:
     ports:
       # Map host port 80 to the container's port 8080 (where Nginx is listening)
       - "80:8080"
+    volumes:
+      - ./media:/usr/share/nginx/html/media
     depends_on:
       - backend
 

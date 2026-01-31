@@ -1,0 +1,15 @@
+<h2>Ajouter une nouvelle couleur</h2>
+<form [formGroup]="colorForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="color-name" class="form-label">Nom de la couleur</label>
+    <input type="text" id="color-name" class="form-control" formControlName="name">
+  </div>
+  <div class="mb-3">
+    <label for="color-image" class="form-label">Image de la couleur</label>
+    <input type="file" id="color-image" class="form-control" (change)="onFileChange($event)">
+    <div class="image-preview mt-2" *ngIf="imagePreview">
+      <img [src]="imagePreview" alt="Image preview" class="img-thumbnail">
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="colorForm.invalid">Ajouter la couleur</button>
+</form>

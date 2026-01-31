@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { ProductFormComponent } from '../product-form/product-form.component';
-import { ProductListComponent } from '../product-list/product-list.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ProductFormComponent, ProductListComponent],
+  imports: [RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })

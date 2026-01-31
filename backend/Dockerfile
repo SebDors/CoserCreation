@@ -35,13 +35,14 @@ FROM eclipse-temurin:${JDK_VERSION} AS runner
 WORKDIR /app
 
 # Create a dedicated non-root user and group for security
-RUN addgroup -S spring && adduser -S spring -G spring
+# RUN addgroup -S spring && adduser -S spring -G spring
 
-# Copy the executable JAR from the build stage, setting ownership to the 'spring' user
-COPY --from=builder --chown=spring:spring /app/target/CoserCreation-0.0.1-SNAPSHOT.jar app.jar
+# Copy the executable JAR from the build stage
+# COPY --from=builder --chown=spring:spring /app/target/CoserCreation-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/target/CoserCreation-0.0.1-SNAPSHOT.jar app.jar
 
 # Switch to the non-root user
-USER spring
+# USER spring
 
 # Expose port 8080 to allow HTTP traffic (default for Spring Boot)
 EXPOSE 8080

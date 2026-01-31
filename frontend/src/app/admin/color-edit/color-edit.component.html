@@ -1,0 +1,25 @@
+<div class="container mt-4">
+  <form [formGroup]="colorForm" (ngSubmit)="onSave()">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Modifier la couleur</h2>
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+        <button type="submit" class="btn btn-primary" [disabled]="colorForm.invalid">Enregistrer les modifications</button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="edit-color-name" class="form-label">Nom de la couleur</label>
+      <input type="text" id="edit-color-name" class="form-control" formControlName="name">
+    </div>
+
+    <div class="mb-3">
+      <label for="edit-color-image" class="form-label">Image de la couleur</label>
+      <input type="file" id="edit-color-image" class="form-control" (change)="onFileChange($event)">
+      <div class="image-preview mt-2" *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Image preview" class="img-thumbnail">
+      </div>
+    </div>
+
+  </form>
+</div>
