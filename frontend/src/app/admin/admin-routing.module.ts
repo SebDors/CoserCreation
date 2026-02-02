@@ -7,11 +7,13 @@ import { ColorManagementComponent } from './color-management/color-management.co
 import { ProductEditComponent } from './product-edit/product-edit.component';
 
 import { ColorEditComponent } from './color-edit/color-edit.component';
+import { authGuard } from '../auth.guard';
+import { loginGuard } from '../login.guard';
 // ... other imports
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, canActivate: [loginGuard] },
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -21,7 +23,8 @@ const routes: Routes = [
       { path: 'creations', component: ProductManagementComponent },
       { path: 'couleurs/edit/:id', component: ColorEditComponent }, // Add this
       { path: 'couleurs', component: ColorManagementComponent }
-    ]
+    ],
+    canActivate: [authGuard]
   }
 ];
 

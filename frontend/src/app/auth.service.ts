@@ -1,31 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+interface LoginResponse {
+  token: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated = false;
+  private apiUrl = 'http://localhost:8080/api/login';
+  private readonly TOKEN_KEY = 'auth_token';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
-  login(email: string, password: string): boolean {
-    // For demonstration purposes, using a hardcoded email and password.
-    // In a real application, you would use a secure authentication method.
-    if (email === 'admin@example.com' && password === 'admin') {
-      this.isAuthenticated = true;
-      this.router.navigate(['/admin/dashboard']);
-      return true;
-    }
-    return false;
+  login(username: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.apiUrl, { username, password }).pipe(
+      tap(response => {
+        localStorage.setItem(this.TOKEN_KEY, response.token);
+        this.router.navigate(['/admin/dashboard']);
+      })
+    );
   }
 
   logout(): void {
-    this.isAuthenticated = false;
+    localStorage.removeItem(this.TOKEN_KEY);
     this.router.navigate(['/admin/login']);
   }
 
   isLoggedIn(): boolean {
-    return this.isAuthenticated;
+    return !!localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
   }
 }

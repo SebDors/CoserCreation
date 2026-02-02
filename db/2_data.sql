@@ -253,3 +253,10 @@ VALUES (1, 1),
     (7, 10),
     (7, 11),
     (7, 12);
+
+INSERT INTO
+    admin_user (username, password_hash)
+VALUES (
+        'cosercreation',
+        '$2y$10$7XyZoiRdLpv1TB58EMXtOOFySOQp8G00WOJf4X.P9uqkkFaKbFJJu'
+    );

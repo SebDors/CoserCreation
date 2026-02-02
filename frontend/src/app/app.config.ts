@@ -1,10 +1,10 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations'; // Required for ngx-toastr
-import { provideToastr } from 'ngx-toastr'; // ngx-toastr provides provideToastr
-
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 import { routes } from './app.routes';
+import { authInterceptor } from './auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,12 +12,12 @@ export const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling({ anchorScrolling: 'enabled' })
     ),
-    provideHttpClient(),
-    provideAnimations(), // Required for ngx-toastr
+    provideHttpClient(withInterceptors([authInterceptor])), // Configure the interceptor here
+    provideAnimations(),
     provideToastr({
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-    }), // Provide toastr config
+    }),
   ]
 };
