@@ -1,23 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private isAuthenticated = false;
+  private apiUrl = '/api/login';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
-  login(email: string, password: string): boolean {
-    // For demonstration purposes, using a hardcoded email and password.
-    // In a real application, you would use a secure authentication method.
-    if (email === 'admin@example.com' && password === 'admin') {
-      this.isAuthenticated = true;
-      this.router.navigate(['/admin/dashboard']);
-      return true;
-    }
-    return false;
+  login(username: string, password: string): Observable<any> {
+    return this.http.post<void>(this.apiUrl, { username, password }).pipe(
+      tap(() => {
+        this.isAuthenticated = true;
+        this.router.navigate(['/admin/dashboard']);
+      }),
+      catchError((error) => {
+        this.isAuthenticated = false;
+        throw error;
+      })
+    );
   }
 
   logout(): void {

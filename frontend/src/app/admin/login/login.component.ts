@@ -11,15 +11,24 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  email = '';
+  username = '';
   password = '';
   errorMessage = '';
 
   constructor(private authService: AuthService) { }
 
   onLogin(): void {
-    if (!this.authService.login(this.email, this.password)) {
-      this.errorMessage = 'Email ou mot de passe incorrect';
-    }
+    this.errorMessage = ''; 
+    this.authService.login(this.username, this.password).subscribe({
+      next: () => {
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect.';
+        } else {
+          this.errorMessage = 'Une erreur est survenue. Veuillez réessayer plus tard.';
+        }
+      }
+    });
   }
 }
