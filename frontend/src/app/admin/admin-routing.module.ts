@@ -8,11 +8,12 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 
 import { ColorEditComponent } from './color-edit/color-edit.component';
 import { authGuard } from '../auth.guard';
+import { loginGuard } from '../login.guard';
 // ... other imports
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [loginGuard] },
   {
     path: 'dashboard',
     component: DashboardComponent,
