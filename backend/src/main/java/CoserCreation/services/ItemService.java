@@ -8,6 +8,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,8 +45,15 @@ public class ItemService {
         this.emailService = emailService;
     }
 
-    public List<ItemShortDTO> getAllItems() {
-        return ItemMapper.toShortDTOList(itemDAO.findAll());
+    public List<ItemShortDTO> getAllItems(String sortBy, String sortDirection, Integer limit) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+
+        if (limit != null && limit > 0) {
+            Pageable pageable = PageRequest.of(0, limit, sort);
+            return ItemMapper.toShortDTOList(itemDAO.findAll(pageable).getContent());
+        } else {
+            return ItemMapper.toShortDTOList(itemDAO.findAll(sort));
+        }
     }
 
     public ItemDTO getItemById(int id) {

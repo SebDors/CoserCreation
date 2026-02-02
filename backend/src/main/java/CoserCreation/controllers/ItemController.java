@@ -31,8 +31,11 @@ public class ItemController {
     }
 
     @GetMapping("")
-    public List<ItemShortDTO> getAllItems() {
-        return itemService.getAllItems();
+    public List<ItemShortDTO> getAllItems(
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection,
+            @RequestParam(required = false) Integer limit) {
+        return itemService.getAllItems(sortBy, sortDirection, limit);
     }
 
     @GetMapping("/{id}")

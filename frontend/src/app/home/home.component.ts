@@ -19,8 +19,7 @@ export class HomeComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.featuredProducts$ = this.dataService.getProducts().pipe(
-      map(products => products.slice(0, 3))
-    );
+    // Récupérer les 3 derniers articles (triés par ID descendant)
+    this.featuredProducts$ = this.dataService.getItems('id', 'desc', 3);
   }
 }

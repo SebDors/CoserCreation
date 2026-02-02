@@ -18,6 +18,7 @@ export class GalleryComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.products$ = this.dataService.getProducts();
+    // Récupérer tous les articles triés par ID croissant
+    this.products$ = this.dataService.getItems('id', 'asc');
   }
 }

@@ -37,8 +37,16 @@ export class DataService {
     this.loadProducts();
   }
 
-  private loadProducts(): void {
-    this.http.get<BackendItem[]>(this.apiUrl).pipe(
+  getItems(sortBy: string, sortDirection: string, limit?: number): Observable<Product[]> {
+    let params: any = {
+      sortBy: sortBy,
+      sortDirection: sortDirection
+    };
+    if (limit) {
+      params.limit = limit;
+    }
+
+    return this.http.get<BackendItem[]>(this.apiUrl, { params }).pipe(
       map(items => items.map(item => ({
         id: item.id,
         name: item.title,
@@ -47,10 +55,17 @@ export class DataService {
         imageUrls: item.images && item.images.length > 0 ? item.images.map(img => img.imageUrl) : ['assets/images/placeholder.svg'],
         colors: item.colors || []
       }))),
+      catchError((err) => {
+        this.toastr.error('Erreur lors du chargement des créations', 'Erreur');
+        return throwError(() => err);
+      })
+    );
+  }
+
+  private loadProducts(): void {
+    this.getItems('id', 'asc').pipe(
       tap(products => this.products.next(products))
-    ).subscribe({
-      error: (err) => this.toastr.error('Erreur lors du chargement des créations', 'Erreur')
-    });
+    ).subscribe();
   }
 
   getProducts(): Observable<Product[]> {
