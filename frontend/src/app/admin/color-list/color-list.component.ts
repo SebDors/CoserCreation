@@ -22,11 +22,9 @@ export class ColorListComponent implements OnInit {
   }
 
   onDelete(colorId: number): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette couleur ?')) {
-      this.dataService.deleteColor(colorId).subscribe(() => {
-        this.colors$ = this.dataService.getColors(); // Refresh the list
-      });
-    }
+    this.dataService.deleteColor(colorId).subscribe(() => {
+      this.colors$ = this.dataService.getColors(); // Refresh the list
+    });
   }
 
   onEdit(colorId: number): void {
