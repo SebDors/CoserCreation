@@ -32,3 +32,9 @@ CREATE Table clients (
     email VARCHAR(255) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE
 );
+
+CREATE Table admin_user (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) UNIQUE not NULL,
+    password_hash VARCHAR(255) not NULL
+)
