@@ -8,9 +8,10 @@
     <label for="password">Mot de passe</label>
     <input type="password" id="password" class="form-control" [(ngModel)]="password" (keyup.enter)="onLogin()">
   </div>
-  <button class="btn btn-primary" (click)="onLogin()">Connexion</button>
+  <div class="d-grid gap-2">
+    <button class="btn btn-primary mt-3" type="button" (click)="onLogin()">Connexion</button>
+  </div>
   <div *ngIf="errorMessage" class="alert alert-danger mt-3">
     {{ errorMessage }}
   </div>
 </div>
-

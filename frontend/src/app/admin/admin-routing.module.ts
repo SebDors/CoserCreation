@@ -7,10 +7,11 @@ import { ColorManagementComponent } from './color-management/color-management.co
 import { ProductEditComponent } from './product-edit/product-edit.component';
 
 import { ColorEditComponent } from './color-edit/color-edit.component';
+import { authGuard } from '../auth.guard';
 // ... other imports
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'dashboard',
@@ -21,7 +22,8 @@ const routes: Routes = [
       { path: 'creations', component: ProductManagementComponent },
       { path: 'couleurs/edit/:id', component: ColorEditComponent }, // Add this
       { path: 'couleurs', component: ColorManagementComponent }
-    ]
+    ],
+    canActivate: [authGuard]
   }
 ];
 
