@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class NewsletterPopupComponent implements OnInit {
   newsletterForm!: FormGroup;
+  showPopup: boolean = true; // Control visibility of the popup
 
   constructor(
     private fb: FormBuilder,
@@ -32,6 +33,7 @@ export class NewsletterPopupComponent implements OnInit {
         next: () => {
           this.toastr.success('Vous êtes bien inscrit à notre newsletter !', 'Succès');
           this.newsletterForm.reset();
+          this.closePopup(); // Close popup on successful subscription
         },
         error: (err) => {
           if (err.status === 409) {
@@ -42,5 +44,9 @@ export class NewsletterPopupComponent implements OnInit {
         }
       });
     }
+  }
+
+  closePopup(): void {
+    this.showPopup = false;
   }
 }

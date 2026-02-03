@@ -11,6 +11,23 @@
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 300px;
+  position: relative; /* Needed for absolute positioning of close button */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 16px;
+  line-height: 25px;
+  text-align: center;
+  cursor: pointer;
 }
 
 h3 {

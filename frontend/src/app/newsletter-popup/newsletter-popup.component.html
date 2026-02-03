@@ -1,4 +1,5 @@
-<div class="newsletter-popup">
+<div class="newsletter-popup" *ngIf="showPopup">
+  <button class="close-button" (click)="closePopup()">&times;</button>
   <h3>Vous voulez suivre nos créations ?</h3>
   <p>Inscrivez-vous à notre newsletter !</p>
   <form [formGroup]="newsletterForm" (ngSubmit)="onSubmit()">
