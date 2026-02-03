@@ -260,3 +260,7 @@ VALUES (
         'cosercreation',
         '$2y$10$7XyZoiRdLpv1TB58EMXtOOFySOQp8G00WOJf4X.P9uqkkFaKbFJJu'
     );
+
+INSERT INTO
+    clients (email, is_active)
+VALUES ('dorssebastien@gmail.com', true)

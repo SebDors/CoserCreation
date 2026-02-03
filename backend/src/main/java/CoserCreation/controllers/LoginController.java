@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/login")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost")
 public class LoginController {
     private final LoginService loginService;
     private final JwtService jwtService;
