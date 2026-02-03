@@ -12,7 +12,7 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://74.161.36.149:8080/api/login';
+  private apiUrl = 'http://localhost:8080/api/login';
   private readonly TOKEN_KEY = 'auth_token';
 
   constructor(private router: Router, private http: HttpClient) { }
