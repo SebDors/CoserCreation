@@ -27,9 +27,9 @@ interface BackendItemDetail {
   providedIn: 'root'
 })
 export class DataService {
-  private apiUrl = 'http://localhost:8080/api/items';
-  private colorsApiUrl = 'http://localhost:8080/api/colors';
-  private clientsApiUrl = 'http://localhost:8080/api/clients';
+  private apiUrl = 'http://74.161.36.149:8080/api/items';
+  private colorsApiUrl = 'http://74.161.36.149:8080/api/colors';
+  private clientsApiUrl = 'http://74.161.36.149:8080/api/clients';
 
   private products = new BehaviorSubject<Product[]>([]);
   products$ = this.products.asObservable();

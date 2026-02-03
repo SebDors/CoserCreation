@@ -35,7 +35,7 @@ public class ItemService {
     private final ItemImageDAO itemImageDAO;
     private final EmailService emailService;
 
-    private final String fileSystemUploadDir = "/app/media/items/";
+    private final String fileSystemUploadDir = "media/items/";
     private final String webPath = "media/items/";
 
     public ItemService(ItemDAO itemDAO, ColorDAO colorDAO, ItemImageDAO itemImageDAO, EmailService emailService) {
