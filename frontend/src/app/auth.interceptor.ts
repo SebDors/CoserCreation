@@ -10,7 +10,7 @@ export const authInterceptor: HttpInterceptorFn = (
   const authService = inject(AuthService);
   const token = authService.getToken();
 
-  if (token && req.url.includes('localhost:8080/api/')) {
+  if (token && req.url.includes('74.161.36.149:8080/api/')) {
     const cloned = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`),
     });
