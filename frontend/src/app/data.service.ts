@@ -28,7 +28,8 @@ interface BackendItemDetail {
 })
 export class DataService {
   private apiUrl = 'http://localhost:8080/api/items';
-  private colorsApiUrl = 'http://localhost:8080/api/colors'; // New
+  private colorsApiUrl = 'http://localhost:8080/api/colors';
+  private clientsApiUrl = 'http://localhost:8080/api/clients';
 
   private products = new BehaviorSubject<Product[]>([]);
   products$ = this.products.asObservable();
@@ -223,5 +224,10 @@ export class DataService {
         resolve({ success: true, message: 'Message sent successfully!' });
       }, 1000);
     });
+  }
+
+  addClient(email: string): Observable<any> {
+    const clientDTO = { email: email };
+    return this.http.post(this.clientsApiUrl, clientDTO);
   }
 }

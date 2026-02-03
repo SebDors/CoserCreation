@@ -1,0 +1,12 @@
+<div class="newsletter-popup">
+  <h3>Vous voulez suivre nos créations ?</h3>
+  <p>Inscrivez-vous à notre newsletter !</p>
+  <form [formGroup]="newsletterForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <input type="email" formControlName="email" class="form-control" placeholder="Votre adresse email">
+    </div>
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary" [disabled]="!newsletterForm.valid">S'inscrire</button>
+    </div>
+  </form>
+</div>

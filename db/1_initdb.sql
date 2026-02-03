@@ -29,7 +29,7 @@ CREATE TABLE item_colors (
 
 CREATE Table clients (
     id SERIAL PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
     is_active BOOLEAN DEFAULT TRUE
 );
 

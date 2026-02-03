@@ -5,11 +5,12 @@ import { Product } from '../product.model';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { NewsletterPopupComponent } from '../newsletter-popup/newsletter-popup.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, NewsletterPopupComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
